@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hakkımızda — Lefendir You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { black: '#0a0a0a', gold: '#d4af37', vanilla: '#f3e5ab' },
+          fontFamily: { playfair: ['"Playfair Display"', 'serif'], lato: ['Lato', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #0a0a0a; color: #f3e5ab; font-family: 'Lato', sans-serif; overflow-x: hidden; }
+
+    /* NAV */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.5s ease;
+      padding: 1.2rem 2rem;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+    }
+    .nav-link {
+      font-family: 'Lato', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: #f3e5ab; text-decoration: none; transition: color 0.3s;
+      position: relative;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1px; background: #d4af37;
+      transform: scaleX(0); transition: transform 0.3s ease;
+    }
+    .nav-link:hover { color: #d4af37; }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link.active { color: #d4af37; }
+    .nav-link.active::after { transform: scaleX(1); }
+
+    /* PAGE HERO */
+    .page-hero {
+      margin-top: 70px;
+      padding: clamp(4rem, 10vw, 9rem) clamp(1.5rem, 8vw, 8rem);
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: 'STORY';
+      position: absolute; top: 50%; right: -2rem; transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 22vw, 26rem);
+      font-weight: 700;
+      color: rgba(212,175,55,0.025);
+      pointer-events: none;
+      letter-spacing: -0.03em;
+    }
+    .hero-label {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: #d4af37; margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 6.5rem);
+      font-weight: 400; color: #f3e5ab; line-height: 1.1;
+      max-width: 700px; position: relative; z-index: 1;
+    }
+    .hero-divider { width: 50px; height: 1px; background: #d4af37; margin: 2rem 0; opacity: 0.6; }
+    .hero-intro {
+      font-family: 'Lato', sans-serif;
+      font-size: clamp(1rem, 1.8vw, 1.2rem); font-weight: 300;
+      line-height: 1.9; color: rgba(243,229,171,0.65);
+      max-width: 580px; position: relative; z-index: 1;
+    }
+
+    /* STORY BODY */
+    .story-container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); }
+
+    /* 50/50 SPLIT */
+    .story-split {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+      padding: clamp(4rem, 8vw, 8rem) 0;
+      border-bottom: 1px solid rgba(212,175,55,0.08);
+    }
+    @media (max-width: 768px) {
+      .story-split { grid-template-columns: 1fr; }
+      .story-split-reverse { direction: ltr; }
+    }
+    .story-split-reverse { direction: rtl; }
+    .story-split-reverse > * { direction: ltr; }
+
+    .story-image-wrap {
+      position: relative;
+    }
+    .story-image-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .story-image-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -16px; right: -16px;
+      width: 60%; height: 60%;
+      border: 1px solid rgba(212,175,55,0.2);
+      pointer-events: none;
+    }
+    .story-caption {
+      position: absolute;
+      bottom: 1.5rem; left: 1.5rem;
+      background: rgba(10,10,10,0.85);
+      border-left: 2px solid #d4af37;
+      padding: 0.8rem 1.2rem;
+    }
+    .story-caption-text {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(243,229,171,0.6);
+    }
+
+    .story-text-block { display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+    .story-section-label {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: #d4af37;
+    }
+    .story-section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; color: #f3e5ab; line-height: 1.25;
+    }
+    .story-section-body {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem; font-weight: 300;
+      line-height: 1.9; color: rgba(243,229,171,0.62);
+    }
+    .story-divider { width: 40px; height: 1px; background: rgba(212,175,55,0.4); }
+    .story-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-style: italic; color: rgba(212,175,55,0.8);
+      line-height: 1.6; padding-left: 1.5rem;
+      border-left: 2px solid rgba(212,175,55,0.3);
+    }
+
+    /* VALUES SECTION */
+    .values-section { padding: clamp(4rem, 8vw, 8rem) 0; }
+    .values-header { text-align: center; margin-bottom: 4rem; }
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    @media (max-width: 640px) { .values-grid { grid-template-columns: 1fr; } }
+    .value-card {
+      padding: 3rem 2rem;
+      border: 1px solid rgba(212,175,55,0.08);
+      transition: border-color 0.4s, background 0.4s;
+    }
+    .value-card:hover { border-color: rgba(212,175,55,0.25); background: rgba(212,175,55,0.03); }
+    .value-icon {
+      font-size: 1.8rem; margin-bottom: 1.5rem; display: block; color: #d4af37;
+    }
+    .value-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 400; color: #f3e5ab; margin-bottom: 1rem;
+    }
+    .value-body {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem; font-weight: 300;
+      line-height: 1.8; color: rgba(243,229,171,0.5);
+    }
+
+    /* TIMELINE SECTION */
+    .timeline-section {
+      padding: clamp(4rem, 8vw, 8rem) 0;
+      border-top: 1px solid rgba(212,175,55,0.08);
+    }
+    .timeline-header { text-align: center; margin-bottom: 4rem; }
+    .timeline { display: flex; flex-direction: column; gap: 0; max-width: 700px; margin: 0 auto; }
+    .timeline-item { display: flex; gap: 2rem; position: relative; padding-bottom: 3rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 60px; }
+    .timeline-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid #d4af37; background: #0a0a0a;
+      flex-shrink: 0; margin-top: 4px;
+    }
+    .timeline-line { width: 1px; flex: 1; background: rgba(212,175,55,0.15); margin-top: 8px; }
+    .timeline-item:last-child .timeline-line { display: none; }
+    .timeline-year {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; color: #d4af37; margin-top: 2px;
+      text-align: center; font-weight: 400;
+    }
+    .timeline-content { flex: 1; padding-top: 0; }
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 400; color: #f3e5ab; margin-bottom: 0.5rem;
+    }
+    .timeline-body {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem; font-weight: 300;
+      line-height: 1.7; color: rgba(243,229,171,0.5);
+    }
+
+    /* CLOSING QUOTE */
+    .closing-quote {
+      padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 8vw, 8rem);
+      text-align: center;
+      border-top: 1px solid rgba(212,175,55,0.08);
+    }
+    .closing-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 3rem);
+      font-style: italic; font-weight: 400;
+      color: rgba(243,229,171,0.8); line-height: 1.5;
+      max-width: 800px; margin: 0 auto 1.5rem;
+    }
+    .closing-attr {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: rgba(212,175,55,0.4);
+    }
+
+    /* CTA */
+    .story-cta { text-align: center; padding: 0 0 clamp(4rem,8vw,8rem); }
+    .btn-outline {
+      display: inline-block;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: #d4af37; border: 1px solid #d4af37;
+      padding: 1.1rem 3rem; text-decoration: none;
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+    }
+    .btn-outline:hover { background: #d4af37; color: #0a0a0a; transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background:#0a0a0a;border-top:1px solid rgba(212,175,55,0.12);padding:4rem 2rem 2.5rem;text-align:center; }
+    .footer-brand{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;color:#d4af37;letter-spacing:0.1em;}
+    .footer-tagline{font-family:'Lato',sans-serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(212,175,55,0.4);margin-top:0.5rem;}
+    .footer-links{display:flex;justify-content:center;gap:2.5rem;margin-top:2.5rem;flex-wrap:wrap;}
+    .footer-link{font-family:'Lato',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(243,229,171,0.4);text-decoration:none;transition:color 0.3s;}
+    .footer-link:hover{color:#d4af37;}
+    .footer-divider{width:40px;height:1px;background:rgba(212,175,55,0.2);margin:2.5rem auto;}
+    .footer-copy{font-family:'Lato',sans-serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(243,229,171,0.25);}
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div style="max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;">
+      <a href="index.html">
+        <img src="WhatsApp Image 2026-05-23 at 14.32.04 (2).jpeg" alt="Lefendir You" style="height:44px;width:44px;object-fit:cover;border-radius:50%;border:1px solid rgba(212,175,55,0.4);" />
+      </a>
+      <div style="display:flex;gap:2.5rem;align-items:center;">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="koleksiyon.html" class="nav-link">Koleksiyon</a>
+        <a href="hakkimizda.html" class="nav-link active">Hakkımızda</a>
+        <a href="iletisim.html" class="nav-link">İletişim</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <p class="hero-label">Hikâyemiz</p>
+    <h1 class="hero-title">İstanbul'dan<br />Doğan Bir<br /><em>Marka</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-intro">
+      Lefendir You; iki kıtanın kesiştiği şehrin ruhundan doğan, zanaatkârlığı ve doğallığı lüksle harmanlayan bir parfüm evidir. Kokuyu bir anlatıya, izi ise bir kimliğe dönüştürüyoruz.
+    </p>
+  </section>
+
+  <!-- STORY: 50/50 SPLIT 1 -->
+  <div class="story-container">
+    <div class="story-split">
+      <!-- Image -->
+      <div class="story-image-wrap">
+        <img src="WhatsApp Image 2026-05-23 at 14.32.04.jpeg" alt="Lefendir You parfüm şişesi" />
+        <div class="story-caption">
+          <span class="story-caption-text">Istanbul, 2024 · İmza Koleksiyonu</span>
+        </div>
+      </div>
+      <!-- Text -->
+      <div class="story-text-block">
+        <p class="story-section-label">Başlangıç</p>
+        <h2 class="story-section-heading">Her Büyük Koku,<br />Bir Tutkudan Doğar</h2>
+        <div class="story-divider"></div>
+        <p class="story-section-body">
+          Lefendir You, İstanbul'un kalabalık çarşılarında, baharatların ve çiçeklerin birbirine karıştığı o eşsiz koku dünyasından ilham alan bir kadının hayaliyle doğdu. Yıllar içinde perfümoloji ve doğal hammaddeler üzerine edinilen derin bilgi, nihayet bir markanın temelini oluşturdu.
+        </p>
+        <p class="story-section-body">
+          Amacımız yalnızca güzel bir koku yaratmak değildi; bir duygu, bir hatıra, bir iz bırakmaktı. Lefendir You tam da bu ihtiyaçtan doğdu: kimliğinizin en sessiz ama en kalıcı ifadesi.
+        </p>
+        <blockquote class="story-quote">
+          "Bir koku, sizi hiçbir fotoğrafın yapamayacağı şekilde bir ana, bir insana, bir duyguya geri götürür."
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- STORY: 50/50 SPLIT 2 — reversed -->
+    <div class="story-split story-split-reverse">
+      <!-- Text -->
+      <div class="story-text-block">
+        <p class="story-section-label">Zanaatkârlık</p>
+        <h2 class="story-section-heading">Vanilyanın<br />Seçimi Bir Sanattır</h2>
+        <div class="story-divider"></div>
+        <p class="story-section-body">
+          Madagaskar'ın tropikal iklimiyle özdeşleşmiş Bourbon vanilya meyvelerini elleriyle toplayan çiftçilerle doğrudan çalışıyoruz. Hasat sonrası geleneksel yöntemlerle işlenen meyveler; tatlılığını, zenginliğini ve o eşsiz kadifemsi dokusunu korumuş olarak bize ulaşır.
+        </p>
+        <p class="story-section-body">
+          Her parti hammadde, parfümörlerimiz tarafından bizzat test edilir. Kalite standartlarımız, sektörün çok üzerindedir; zira müşterilerimize yalnızca en saf ve en güçlü vanilya deneyimini sunmayı vaat ediyoruz.
+        </p>
+        <p class="story-section-body">
+          Tonka fasulyesi, amber ve müşkle tamamlanan bu formül; yıllarca süren araştırma ve sayısız prototip testinin ürünüdür. Her damla, bu emeğin sessiz şahididir.
+        </p>
+      </div>
+      <!-- Image -->
+      <div class="story-image-wrap">
+        <img src="WhatsApp Image 2026-05-23 at 14.32.04 (1).jpeg" alt="Parfüm hazırlanışı" />
+        <div class="story-caption" style="right:1.5rem;left:auto;">
+          <span class="story-caption-text">Madagaskar · Bourbon Vanyası</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUES SECTION -->
+  <div style="border-top:1px solid rgba(212,175,55,0.08);margin-top:0;">
+    <div class="story-container">
+      <div class="values-section">
+        <div class="values-header">
+          <p class="story-section-label" style="text-align:center;margin-bottom:1rem;">Temel Değerlerimiz</p>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:400;color:#f3e5ab;">Bizi Biz Yapan Şeyler</h2>
+        </div>
+        <div class="values-grid">
+          <div class="value-card">
+            <span class="value-icon">◈</span>
+            <h3 class="value-title">Saflık</h3>
+            <p class="value-body">Tüm hammaddelerimiz doğal kaynaklıdır. Sentetik katkı maddesi kullanmıyor, bileşenlerimizin menşeini her zaman izliyoruz. Şişeden cildinize ulaşan her molekül özenle seçilmiştir.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">✦</span>
+            <h3 class="value-title">Lüks</h3>
+            <p class="value-body">Lüks, yalnızca fiyat değildir. Sizi sarıp sarmalaması için tasarlanan deneyimin bütünüdür: ağır kristal şişe, ipeğe dokunan koku, kişisel hizmet anlayışı.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">❋</span>
+            <h3 class="value-title">İz Bırakmak</h3>
+            <p class="value-body">Her insan kendi izini bırakmayı hak eder. Lefendir You; sizi tanımlayan, odadan çıktıktan sonra dahi hatırlatan o benzersiz koku kimliğini oluşturmanıza yardımcı olur.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div style="border-top:1px solid rgba(212,175,55,0.08);">
+    <div class="story-container">
+      <div class="timeline-section">
+        <div class="timeline-header">
+          <p class="story-section-label" style="text-align:center;margin-bottom:1rem;">Yolculuğumuz</p>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:400;color:#f3e5ab;">Kısa Bir Tarihçe</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+              <span class="timeline-year">2022</span>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">İlk Vizyon</h3>
+              <p class="timeline-body">İstanbul'un tarihi çarşılarında başlayan parfümoloji yolculuğu. Doğal hammaddeler ve geleneksel koku hazırlama teknikleri üzerine kapsamlı araştırma dönemi.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+              <span class="timeline-year">2023</span>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Formülün Doğuşu</h3>
+              <p class="timeline-body">Madagaskar Bourbon vanyasıyla ilk buluşma. Tonka, amber ve müşk notalarıyla sayısız prototip hazırlandı. En sonunda Lefendir You imza formülü kristalize oldu.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+              <span class="timeline-year">2024</span>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Marka Lansmanı</h3>
+              <p class="timeline-body">Lefendir You resmi olarak İstanbul'dan dünyaya açıldı. İlk koleksiyonumuz; vanilyanın sıcaklığını en saf hâliyle sunan imza Eau de Parfum ile hayat buldu.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-dot"></div>
+              <span class="timeline-year">→</span>
+            </div>
+            <div class="timeline-content">
+              <h3 class="timeline-title">Geleceğe Doğru</h3>
+              <p class="timeline-body">Yeni koku aileleri, özel seri üretimler ve İstanbul mağazası planları üzerinde çalışılıyor. Her adımda aynı taahhüt: saflık, lüks, iz bırakmak.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSING QUOTE -->
+  <div class="closing-quote">
+    <p class="closing-text">"Koku; görünmez bir elbise, işitilemeyen bir müzik ve silinmez bir anıdır."</p>
+    <p class="closing-attr">Lefendir You — Istanbul, Türkiye</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="story-cta">
+    <a href="koleksiyon.html" class="btn-outline">Koleksiyona Git</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-brand">Lefendir You</p>
+    <p class="footer-tagline">Istanbul · Eau de Parfum · Est. 2024</p>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="koleksiyon.html" class="footer-link">Koleksiyon</a>
+      <a href="hakkimizda.html" class="footer-link">Hakkımızda</a>
+      <a href="iletisim.html" class="footer-link">İletişim</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2024 Lefendir You. Tüm hakları saklıdır. · Istanbul, Türkiye</p>
+  </footer>
+
+</body>
+</html>
